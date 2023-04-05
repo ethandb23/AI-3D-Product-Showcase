@@ -4,7 +4,7 @@ import React from "react";
 const Tab = () => {
     return (
 
-    <div>AIP</div>
+    <div>Tab</div>
     )
 }
 
