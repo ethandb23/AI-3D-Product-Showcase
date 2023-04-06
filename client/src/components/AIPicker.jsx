@@ -4,7 +4,7 @@ import React from "react";
 const AIPicker = () => {
     return (
 
-    <div>AIP</div>
+    <div>AI Picker</div>
     )
 }
 

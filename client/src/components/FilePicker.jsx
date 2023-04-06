@@ -4,7 +4,7 @@ import React from "react";
 const FilePicker = () => {
     return (
 
-    <div>AIP</div>
+    <div>File Picker</div>
     )
 }
 
