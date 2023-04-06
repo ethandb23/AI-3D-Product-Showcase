@@ -1,6 +1,6 @@
 import React from "react";
 import state from '../store';
-import { useSnapshot } from "valtio";
+import { useSnapshot } from 'valtio';
 
 const CustomButton = ({ type, title, 
     customStyles, handleClick }) => { 
@@ -23,7 +23,7 @@ const CustomButton = ({ type, title,
             style={generateStyle(type)}
             onClick={handleClick}
             >
-                {title}
+            {title}
         </button>
     )
 }
