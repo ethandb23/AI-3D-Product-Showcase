@@ -9,7 +9,7 @@ const ColorPicker = () => {
 
 
     return (
-    <div className="absolute let-full ml-3">
+    <div className="absolute left-full ml-3">
     <SketchPicker 
     color={snap.color}
     disableAlpha
