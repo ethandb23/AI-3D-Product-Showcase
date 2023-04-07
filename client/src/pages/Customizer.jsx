@@ -20,7 +20,7 @@ const Customizer = () => {
     const [generatingImg, setGeneratingImg] = useState(false);
 
     const [activeEditorTab, setActiveEditorTab] = useState('');
-    const [activefilterTab, setActiveFilterTab] = useState({
+    const [activeFilterTab, setActiveFilterTab] = useState({
         logoShirt: true,
         stylishShirt: false,
     })
@@ -30,12 +30,48 @@ const Customizer = () => {
             case "colorpicker":
                 return <ColorPicker />
             case "filepicker":
-                return <FilePicker />
+                return <FilePicker 
+                file={file}
+                setFile={setFile}
+                readFile={readFile}
+                />
             case "aipicker":
                 return <AIPicker />
             default:
                 return null;
         }
+    }
+
+    const handleDeclas = (type, result) => {
+        const decalType = DecalTypes[type];
+
+        state[decalType.stateProperty] = result;
+
+        if(!activeFilterTab[decalType.filterTab]) {
+            handleActiveFilterTab(decalType.filterTab)
+        }
+    }
+
+const handleActiveFilterTab = (tabName) => {
+    switch (tabName) {
+        case "logoShirt":
+            state.isLogotexture = !activeFilterTab[tabName];
+            break;
+        case "stylishShirt":
+            state.isFullTexture = !activeFilterTab[tabName];
+        default:
+            state.isFullTexture = true;
+            state.isLogotexture = false;
+
+    }
+}
+
+    const readFile = (type) => {
+        reader(file)
+        .then((result) => {
+        handleDeclas(type, result);
+        setActiveEditorTab("");
+        })
     }
 
     return (
