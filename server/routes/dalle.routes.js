@@ -12,11 +12,21 @@ const config = new Configuration({
 
 const openai = new OpenAIApi(config);
 
+// Middleware for authorization
+const requireAuth = (req, res, next) => {
+  const api_key = req.headers['authorization'];
+  if (api_key === process.env.OPENAI_API_KEY) {
+    next();
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+}
+
 router.route('/').get((req, res) => {
   res.status(200).json({ message: "Hello from DALL.E ROUTES" })
 })
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(requireAuth, async (req, res) => {
   try {
     const { prompt } = req.body;
 
