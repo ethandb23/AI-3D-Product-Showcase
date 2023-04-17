@@ -1,6 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { Configuration, OpenAIApi} from 'openai';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -30,16 +31,27 @@ router.route('/').post(requireAuth, async (req, res) => {
   try {
     const { prompt } = req.body;
 
-    const response = await openai.createImage({
-      prompt,
-      n: 1,
-      size: '1024x1024',
-      response_format: 'b64_json'
+    const API_URL = 'https://api.openai.com/v1/images/generations';
+    const API_KEY = process.env.OPENAI_API_KEY;
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'image-alpha-001',
+        prompt,
+        size: '1024x1024',
+        response_format: 'url'
+      })
     });
 
-    const image = response.data.data[0].b64_json;
+    const data = await response.json();
+    const image_url = data.data[0].url;
 
-    res.status(200).json({ photo: image });
+    res.status(200).json({ photo: image_url });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" })

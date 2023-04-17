@@ -153,7 +153,7 @@ const Customizer = () => {
           </motion.div>
 
           <motion.div
-            className='filtertabs-container'
+            className="filtertabs-container"
             {...slideAnimation("up")}
           >
             {FilterTabs.map((tab) => (
